@@ -1,0 +1,32 @@
+def beginning_of_the_game():
+    print('Welcome to the game!')
+
+    size = input('Please, input the number of the cell: ')
+    size = int(size)
+    return size
+
+def dimension_of_the_map(size):
+    height = []
+    height += range(size)
+    for numbers in height:
+        height[numbers] = '.'
+    dimension = []
+    for i in height:
+        dimension.append(height)
+    return dimension
+
+width = beginning_of_the_game()
+game_mode = input('Choose the game mode. If you want to play with a computer, input 1. Computer vs Computer, input 2.'
+                  'If you want to play versus a person, input 3: ')
+game_mode = int(game_mode)
+dim = dimension_of_the_map(width)
+
+
+print('Your map is ready! ')
+for i in range(width):
+    print(dim[i])
+
+dim[1][0] = 'X'
+
+for i in range(width):
+    print(dim[i])
