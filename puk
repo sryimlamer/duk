@@ -28,34 +28,27 @@ game_mode = int(game_mode)
 dim = dimension_of_the_map(width)
 
 print('Your map is ready! ')
-for i in range(width):
-    print(dim[i])
+for z in range(width):
+    print(dim[z])
 
 """Создаем отдельные массивы с крестиками и ноликами"""
-player_1_board = dim.copy()
-player_2_board = dim.copy()
+import copy
+player_1_board = copy.deepcopy(dim)
+player_2_board = copy.deepcopy(dim)
 
 """Метод для проверки победы-поражения"""
+
+
 def checking_win_lose(board1, board2, k):
     count = 0
-    for q, x in enumerate(board1):
-        for j, y in enumerate(board1[q][:-1]):
-            if player_1_board[q][j] == y and player_1_board[q][j + 1] == board1[i][j + 1]:
+    for i, x in enumerate(board1):
+        for j, y in enumerate(board1[i][:-1]):
+            if player_1_board[i][j] == y and player_1_board[i][j + 1] == board1[i][j + 1]:
                 count += 1
 
                 if count == k:
-                    print("Win1")
+                    print('Win1')
                     return "player_1 win"
-    count = 0
-    for a, s in enumerate(board2):
-        for z, m in enumerate(board1[a][:-1]):
-            if player_2_board[a][z] == m and player_1_board[a][z + 1] == board1[a][z + 1]:
-                count += 1
-
-                if count == k:
-                    print('Win2')
-                    return "player_2 win"
-
 
 print("You chose the mode 'Human vs Human'! ")
 print("If you want to do a step. Input (x, y).")
@@ -92,7 +85,7 @@ while game_mode == 3:
     y_coordinate_1 = get_coor1y()
     '''Влепить проверку сюда'''
 
-    while dim[x_coordinate_1][y_coordinate_1] == 'O':
+    while dim[y_coordinate_1][x_coordinate_1] == 'O':
         print('Step is impossible!')
 
         x_coordinate_1 = get_coor1x()
@@ -102,8 +95,8 @@ while game_mode == 3:
     player_1_board[y_coordinate_1][x_coordinate_1] = 'X'
     checking_win_lose(player_1_board, player_2_board, k)
 
-    for i in range(width):
-        print(dim[i])
+    for z in range(width):
+        print(dim[z])
 
     player = 2
     print("Second player's turn.")
@@ -111,7 +104,7 @@ while game_mode == 3:
     x_coordinate_2 = get_coor2x()
     y_coordinate_2 = get_coor2y()
 
-    while dim[x_coordinate_2][y_coordinate_2] == 'X':
+    while dim[y_coordinate_2][x_coordinate_2] == 'X':
         print('Step is impossible!')
 
         x_coordinate_2 = get_coor2x()
@@ -121,5 +114,5 @@ while game_mode == 3:
     player_2_board[y_coordinate_2][x_coordinate_2] = 'O'
     checking_win_lose(player_1_board, player_2_board, k)
 
-    for i in range(width):
-        print(dim[i])
+    for z in range(width):
+        print(dim[z])
