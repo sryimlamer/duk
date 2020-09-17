@@ -1,32 +1,125 @@
 def beginning_of_the_game():
+    """Получение размерности поля игры"""
     print('Welcome to the game!')
 
     size = input('Please, input the number of the cell: ')
     size = int(size)
     return size
 
+
 def dimension_of_the_map(size):
-    height = []
-    height += range(size)
-    for numbers in height:
-        height[numbers] = '.'
+    """Создание поля игры"""
+    height = ['.' for _ in range(size)]
     dimension = []
-    for i in height:
-        dimension.append(height)
+    for _ in range(size):
+        dimension.append(height.copy())
     return dimension
 
+"""Получение размерности поля"""
 width = beginning_of_the_game()
+
+k = int(input("Введите количество в ряд, необходимое для победы: "))
+"""Получение выбранного игрового режима"""
 game_mode = input('Choose the game mode. If you want to play with a computer, input 1. Computer vs Computer, input 2.'
                   'If you want to play versus a person, input 3: ')
 game_mode = int(game_mode)
-dim = dimension_of_the_map(width)
 
+"""Получение созданного поля"""
+dim = dimension_of_the_map(width)
 
 print('Your map is ready! ')
 for i in range(width):
     print(dim[i])
 
-dim[1][0] = 'X'
+"""Создаем отдельные массивы с крестиками и ноликами"""
+player_1_board = dim.copy()
+player_2_board = dim.copy()
 
-for i in range(width):
-    print(dim[i])
+"""Метод для проверки победы-поражения"""
+def checking_win_lose(board1, board2, k):
+    count = 0
+    for q, x in enumerate(board1):
+        for j, y in enumerate(board1[q][:-1]):
+            if player_1_board[q][j] == y and player_1_board[q][j + 1] == board1[i][j + 1]:
+                count += 1
+
+                if count == k:
+                    print("Win1")
+                    return "player_1 win"
+    count = 0
+    for a, s in enumerate(board2):
+        for z, m in enumerate(board1[a][:-1]):
+            if player_2_board[a][z] == m and player_1_board[a][z + 1] == board1[a][z + 1]:
+                count += 1
+
+                if count == k:
+                    print('Win2')
+                    return "player_2 win"
+
+
+print("You chose the mode 'Human vs Human'! ")
+print("If you want to do a step. Input (x, y).")
+
+"""Координата Х есть выбор строки. Координата У есть выбор столбца"""
+
+def get_coor1x():
+    player_1_x = int(input("Coordinate of X: "))
+    x_coordinate_1 = player_1_x - 1
+    return x_coordinate_1
+
+def get_coor1y():
+    player_1_y = int(input("Coordinate of Y: "))
+    y_coordinate_1 = player_1_y - 1
+    return y_coordinate_1
+
+def get_coor2x():
+    player_2_x = int(input("Coordinate of X: "))
+    x_coordinate_2 = player_2_x - 1
+    return x_coordinate_2
+
+def get_coor2y():
+    player_2_y = int(input("Coordinate of Y: "))
+    y_coordinate_2 = player_2_y - 1
+    return y_coordinate_2
+
+"""Режим игры человек против человека"""
+while game_mode == 3:
+
+    player = 1
+    print("First player's turn.")
+
+    x_coordinate_1 = get_coor1x()
+    y_coordinate_1 = get_coor1y()
+    '''Влепить проверку сюда'''
+
+    while dim[x_coordinate_1][y_coordinate_1] == 'O':
+        print('Step is impossible!')
+
+        x_coordinate_1 = get_coor1x()
+        y_coordinate_1 = get_coor1y()
+
+    dim[y_coordinate_1][x_coordinate_1] = 'X'
+    player_1_board[y_coordinate_1][x_coordinate_1] = 'X'
+    checking_win_lose(player_1_board, player_2_board, k)
+
+    for i in range(width):
+        print(dim[i])
+
+    player = 2
+    print("Second player's turn.")
+
+    x_coordinate_2 = get_coor2x()
+    y_coordinate_2 = get_coor2y()
+
+    while dim[x_coordinate_2][y_coordinate_2] == 'X':
+        print('Step is impossible!')
+
+        x_coordinate_2 = get_coor2x()
+        y_coordinate_2 = get_coor2y()
+
+    dim[y_coordinate_2][x_coordinate_2] = 'O'
+    player_2_board[y_coordinate_2][x_coordinate_2] = 'O'
+    checking_win_lose(player_1_board, player_2_board, k)
+
+    for i in range(width):
+        print(dim[i])
