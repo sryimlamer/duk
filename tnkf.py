@@ -37,6 +37,7 @@ def checking_win_lose(board1, board2, k):
                 count_first += 1
                 if count_first == k:
                     return 1, "Player 1 win. The end."
+
     """check vertical for p1"""
     count_first = 1
     for i, x in enumerate(board1[:-1]):
@@ -117,14 +118,6 @@ def get_coor2y():
     return y_coordinate_2
 
 
-def check_coor2(func):
-    try:
-        func
-    except IndexError:
-        check_coor2(func)
-    else:
-        return func
-
 
 """Getting the dimensions of the field"""
 
@@ -184,6 +177,7 @@ while game_mode == 1:
 
         if winner:
             print(msg)
+            quit = input("Enter any character to exit: ")
             break
 
         for i in range(width):
@@ -208,6 +202,7 @@ while game_mode == 1:
         winner, msg = checking_win_lose(player_1_board, player_2_board, k)
         if winner:
             print(msg)
+            quit = input("Enter any character to exit: ")
             break
 
         for i in range(width):
